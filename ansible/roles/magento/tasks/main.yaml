@@ -36,7 +36,7 @@
   args:
     chdir: /var/www/html
 
-- name: Give permissions for 
+- name: Give read-write permissions for the web server group
   file:
     path: "{{ paths }}"
     state: directory
@@ -60,7 +60,7 @@
     recurse: yes
   become: yes
 
-- name: Read
+- name: Give read-write permissions for the web server group
   file:
     path: /var/www/html/magento/bin/magento
     state: file
