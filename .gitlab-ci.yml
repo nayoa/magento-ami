@@ -20,7 +20,7 @@ packer_validate:
 
 ansible_lint:
   stage: test
-  image: ansible/ansible
+  image: python:3.7-alpine
   script:
     - pip3 install ansible-lint
     - ansible-lint -x 301 ansible/playbook.yaml
