@@ -1,0 +1,67 @@
+---
+- name: Download Composer binary
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/composer
+    mode: '0755'
+
+- name: Install Composer Globally
+  command: php composer --install-dir=/usr/bin --filename=composer
+  become: yes
+  args:
+    chdir: /tmp/
+
+- name: Allow read write permissions on /var/www directory
+  file:
+    path: /var/www
+    state: directory
+    owner: root
+    group: ubuntu
+    mode: '0775'
+    recurse: yes
+  become: yes
+
+- name: Clear composer cache
+  command: composer clear-cache
+
+- name: Create a new Composer project using the Magento Open Source metapackage
+  expect:
+    command: composer create-project --repository=https://repo.magento.com/ magento/project-community-edition magento
+    responses:
+      'Username': '{{ magento_username }}'
+      'Password': '{{ magento_password }}'
+      "Do you want to store credentials for repo.magento.com in /home/ubuntu/.config/composer/auth.json?[Yn]": 'y'
+    timeout: 600
+  ignore_errors: yes
+  args:
+    chdir: /var/www/html
+
+- name: Give permissions for 
+  file:
+    path: "{{ paths }}"
+    state: directory
+    mode: g+ws
+  vars:
+    paths:
+    - /var/www/html/magento/var
+    - /var/www/html/magento/generated
+    - /var/www/html/magento/vendor
+    - /var/www/html/magento/pub/static
+    - /var/www/html/magento/pub/media
+    - /var/www/html/magento/app/etc
+
+- name: Give read-write permissions for the web server group
+  file:
+    path: /var/www/html/magento
+    owner: "{{ lookup('env','USER') }}"
+    group: www-data
+    state: directory
+    mode: '4770'
+    recurse: yes
+  become: yes
+
+- name: Read
+  file:
+    path: /var/www/html/magento/bin/magento
+    state: file
+    mode: u+x
