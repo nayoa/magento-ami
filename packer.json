@@ -1,0 +1,64 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "region": "{{env `AWS_REGION`}}",
+    "owner": "{{env `ACCOUNT_ID`}}"
+  },
+  "builders": [{
+    "name": "aws-ami-magento-2",
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `region`}}",
+    "source_ami_filter": {
+        "filters": {
+            "name": "hardened-ami-*",
+            "virtualization-type": "hvm",
+            "root-device-type": "ebs"
+        },
+        "owners": ["{{user `owner`}}"],
+        "most_recent": true
+    },
+    "instance_type": "t2.xlarge",
+    "ssh_username": "ubuntu",
+    "ami_name": "magento-2-{{timestamp}}",
+    "ami_description": "Magento 2 AMI",
+    "tags": {
+      "Name": "magento-2-{{isotime \"2006-01-02\"}}",
+      "ManagedBy": "Product Team"
+    }
+  }],
+  "provisioners": [
+  {
+    "type": "shell",
+    "inline": [
+      "sudo apt-get -y install python-pip",
+      "pip install pexpect"
+    ]
+  },
+  {
+    "type": "file",
+    "source": "ansible_vault.txt",
+    "destination": "/tmp/ansible_vault.txt"
+  },
+  {
+      "type": "ansible-local",
+      "playbook_file": "./ansible/playbook.yaml",
+      "role_paths": [
+        "ansible/roles/common",
+        "ansible/roles/magento",
+        "ansible/roles/mysql",
+        "ansible/roles/nginx",
+        "ansible/roles/php"
+      ],
+      "extra_arguments": [ "--vault-password-file=/tmp/ansible_vault.txt" ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "rm /tmp/ansible_vault.txt"
+      ]
+    }
+  ]
+}

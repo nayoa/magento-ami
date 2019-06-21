@@ -1,0 +1,13 @@
+- name: Install MySQL Server and Client
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - mysql-server
+    - mysql-client
+  become: true
+
+- name: Ensure the MySQL service is running
+  service:
+    name: mysql
+    state: started

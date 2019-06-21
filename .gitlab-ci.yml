@@ -1,0 +1,64 @@
+image:
+  name: hashicorp/packer:light
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+stages:
+  - test
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "pip-cache"
+
+cache:
+  paths:
+    - pip-cache
+
+packer_validate:
+  stage: test
+  before_script:
+    - echo $ANSIBLE_VAULT_PASS > ansible_vault.txt
+  script:
+    - packer --version
+    - packer validate packer.json
+  after_script:
+    - rm ansible_vault.txt
+
+ansible_lint:
+  stage: test
+  image: python
+  script:
+    - pip3 install ansible-lint
+    - ansible-lint -x 301 ansible/playbook.yaml
+
+deploy:dev_account:
+  only:
+    refs:
+    - master
+  stage: deploy
+  before_script:
+    - echo $ANSIBLE_VAULT_PASS > ansible_vault.txt
+  script:
+    - echo $ANSIBLE_VAULT_PASS > vault.txt
+    - packer build packer.json
+  after_script:
+    - rm ansible_vault.txt
+  environment:
+    name: aws-dev-account
+  when: manual
+
+deploy:prod_account:
+  only:
+    refs:
+    - master
+  stage: deploy
+  before_script:
+    - echo $ANSIBLE_VAULT_PASS > ansible_vault.txt
+  script:
+    - packer build packer.json
+  after_script:
+    - rm ansible_vault.txt
+  environment:
+    name: aws-prod-account
+  when: manual

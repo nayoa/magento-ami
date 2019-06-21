@@ -1,0 +1,36 @@
+- name: Install PHP 7.2 packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - php7.2-common
+    - php7.2-cli
+    - php7.2-fpm
+    - php7.2-opcache
+    - php7.2-gd
+    - php7.2-mysql
+    - php7.2-intl
+    - php7.2-xsl
+    - php7.2-mbstring
+    - php7.2-zip
+    - php7.2-bcmath
+    - php7.2-soap
+    - php7.2-curl
+  become: yes
+
+- name: Ensure the PHP-FPM service is running
+  service:
+    name: php7.2-fpm
+    state: started
+
+- name: Copy PHP configuration to location
+  copy:
+    src: php.ini
+    dest: /etc/php/7.2/cli/php.ini
+  become: yes
+
+- name: Restart service php7.2-fpm
+  service:
+    name: php7.2-fpm
+    state: restarted
+  become: yes
