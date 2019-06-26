@@ -73,7 +73,7 @@
       'Username': '{{ marketplace_user }}'
       'Password': '{{ marketplace_pass }}'
       "Do you want to store credentials for repo.magento.com in /home/magento_user/.composer/auth.json?[Yn]": 'y'
-    timeout: 600
+    timeout: 300
   become: yes
   become_user: magento_user
   ignore_errors: yes
