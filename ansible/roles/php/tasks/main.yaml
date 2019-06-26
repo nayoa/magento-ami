@@ -22,15 +22,3 @@
   service:
     name: php7.2-fpm
     state: started
-
-- name: Copy PHP configuration to location
-  copy:
-    src: php.ini
-    dest: /etc/php/7.2/cli/php.ini
-  become: yes
-
-- name: Restart service php7.2-fpm
-  service:
-    name: php7.2-fpm
-    state: restarted
-  become: yes
