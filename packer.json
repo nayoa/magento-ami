@@ -39,7 +39,7 @@
   },
   {
     "type": "file",
-    "source": "ansible_vault",
+    "source": "ansible_vault.txt",
     "destination": "/tmp/ansible_vault.txt"
   },
   {
