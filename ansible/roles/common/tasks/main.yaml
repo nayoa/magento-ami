@@ -1,9 +1,3 @@
-- name: Update and Upgrade all packages
-  apt:
-    update_cache: yes
-    upgrade: "yes"
-  become: yes
-
 - name: Install package "unzip"
   apt:
     name: "unzip"

@@ -1,0 +1,15 @@
+- name: Install Composer globally
+  shell: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/bin --filename=composer
+  args:
+    chdir: /var/www/html
+
+- name: Create a new Composer project using the Magento Open Source metapackage
+  expect:
+    command: composer create-project --repository=https://repo.magento.com/ magento/project-community-edition magento
+    responses:
+      Question:
+        - "{{ lookup('env','MAGENTO_MARKETPLACE_USER') }}"
+        - "{{ lookup('env','MAGENTO_MARKETPLACE_PASSWORD') }}"
+
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+  shell: somescript.sh >> somelog.txt

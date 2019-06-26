@@ -1,4 +1,46 @@
 ---
+- name: Ensure group "magento_user" exists
+  group:
+    name: magento_user
+    state: present
+  become: yes
+
+- name: Create 'magento_user' and add to magento_user and www-data groups
+  user:
+    name: magento_user
+    comment: Magento File System Owner
+    group: magento_user
+    groups: www-data
+  become: yes
+
+- name: Upgrade permissions on magento_user home
+  file:
+    path: /home/magento_user
+    mode: '0770'
+  become: yes
+
+- name: Add ubuntu to magento_user group
+  user:
+    name: ubuntu
+    groups: magento_user
+  become: yes
+
+- name: Create remote_dir for ansible
+  file:
+    path: /home/magento_user/.ansible/tmp
+    mode: '0770'
+    owner: magento_user
+    group: magento_user
+    state: directory
+    recurse: yes
+  become: yes
+
+- name: Restart nginx service
+  service:
+    name: nginx
+    state: restarted
+  become: yes
+
 - name: Download Composer binary
   get_url:
     url: https://getcomposer.org/installer
@@ -7,16 +49,16 @@
 
 - name: Install Composer Globally
   command: php composer --install-dir=/usr/bin --filename=composer
-  become: yes
   args:
     chdir: /tmp/
+  become: yes
 
 - name: Allow read write permissions on /var/www directory
   file:
     path: /var/www
     state: directory
     owner: root
-    group: ubuntu
+    group: magento_user
     mode: '0775'
     recurse: yes
   become: yes
@@ -28,15 +70,17 @@
   expect:
     command: composer create-project --repository=https://repo.magento.com/ magento/project-community-edition magento
     responses:
-      'Username': '{{ magento_username }}'
-      'Password': '{{ magento_password }}'
-      "Do you want to store credentials for repo.magento.com in /home/ubuntu/.config/composer/auth.json?[Yn]": 'y'
+      'Username': '{{ marketplace_user }}'
+      'Password': '{{ marketplace_pass }}'
+      "Do you want to store credentials for repo.magento.com in /home/magento_user/.composer/auth.json?[Yn]": 'y'
     timeout: 600
+  become: yes
+  become_user: magento_user
   ignore_errors: yes
   args:
     chdir: /var/www/html
 
-- name: Give read-write permissions for the web server group
+- name: Give g+ws permissions to Magento metapackage directories
   file:
     path: "{{ paths }}"
     state: directory
@@ -49,19 +93,21 @@
     - /var/www/html/magento/pub/static
     - /var/www/html/magento/pub/media
     - /var/www/html/magento/app/etc
+  become: yes
 
-- name: Give read-write permissions for the web server group
+- name: Change ownership of the Magento metapackages to 'magento_user:www_data'
   file:
     path: /var/www/html/magento
-    owner: "{{ lookup('env','USER') }}"
+    owner: magento_user
     group: www-data
     state: directory
     mode: '4770'
     recurse: yes
   become: yes
 
-- name: Give read-write permissions for the web server group
+- name: Give u+x permissions to the magento file
   file:
     path: /var/www/html/magento/bin/magento
     state: file
     mode: u+x
+  become: yes
