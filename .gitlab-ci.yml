@@ -17,9 +17,13 @@ cache:
 
 packer_validate:
   stage: test
+  before_script:
+    - echo $ANSIBLE_VAULT > ansible_vault.txt
   script:
     - packer --version
     - packer validate packer.json
+  after_script:
+    - rm ansible_vault.txt
 
 ansible_lint:
   stage: test
