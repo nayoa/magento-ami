@@ -8,13 +8,6 @@ stages:
   - test
   - deploy
 
-variables:
-  PIP_CACHE_DIR: "pip-cache"
-
-cache:
-  paths:
-    - pip-cache
-
 packer_validate:
   stage: test
   before_script:
