@@ -50,7 +50,6 @@
         "ansible/roles/magento",
         "ansible/roles/mysql",
         "ansible/roles/nginx",
-        "ansible/roles/composer",
         "ansible/roles/php"
       ],
       "extra_arguments": [ "--vault-password-file=/tmp/ansible_vault.txt" ]
