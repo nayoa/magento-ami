@@ -39,6 +39,7 @@ deploy:dev_account:
   environment:
     name: aws-dev-account
   when: manual
+  allow_failure: false
 
 deploy:prod_account:
   only:
@@ -54,3 +55,4 @@ deploy:prod_account:
   environment:
     name: aws-prod-account
   when: manual
+  allow_failure: false
