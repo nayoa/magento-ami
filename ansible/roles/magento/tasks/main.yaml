@@ -107,7 +107,7 @@
 
 - name: Give u+x permissions to the magento file
   file:
-    path: bin/magento
+    path: /var/www/html/magento/bin/magento
     state: file
     mode: u+x
   become: yes
