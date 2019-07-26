@@ -85,6 +85,7 @@
     path: "{{ paths }}"
     state: directory
     mode: g+ws
+    recurse: yes
   vars:
     paths:
     - /var/www/html/magento/var
@@ -93,7 +94,6 @@
     - /var/www/html/magento/pub/static
     - /var/www/html/magento/pub/media
     - /var/www/html/magento/app/etc
-  recurse: yes
   become: yes
 
 - name: Change ownership of the Magento metapackages to 'magento_user:www_data'
