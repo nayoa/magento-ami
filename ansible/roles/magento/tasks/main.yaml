@@ -80,28 +80,14 @@
   args:
     chdir: /var/www/html
 
-- name: Give g+ws permissions to Magento metapackage directories
-  command: find {{ item }} -type d -exec chmod g+ws {} +
-  with_items:
-    - var
-    - generated
-    - vendor
-    - static
-    - pub/media
-    - app/etc
+- name: Give g+w permissions to Magento metapackage files
+  command: find var generated vendor static pub/media app/etc -type f -exec chmod g+w {} +
   become: yes
   args:
     chdir: /var/www/html/magento
 
-- name: Give g+w permissions to Magento metapackage files
-  command: find {{ item }} -type f -exec chmod g+w {} +
-  with_items:
-    - var
-    - generated
-    - vendor
-    - static
-    - pub/media
-    - app/etc
+- name: Give g+ws permissions to Magento metapackage directories
+  command: find var generated vendor static pub/media app/etc -type d -exec chmod g+ws {} +
   become: yes
   args:
     chdir: /var/www/html/magento
