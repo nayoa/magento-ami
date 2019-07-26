@@ -80,29 +80,31 @@
   args:
     chdir: /var/www/html
 
-- name: Give g+w permissions to Magento metapackage directories
-  command: find {{ paths }} -type f -exec chmod g+w {} +
-  vars:
-    paths:
-    - /var/www/html/magento/var
-    - /var/www/html/magento/generated
-    - /var/www/html/magento/vendor
-    - /var/www/html/magento/pub/static
-    - /var/www/html/magento/pub/media
-    - /var/www/html/magento/app/etc
-  become: yes
-
 - name: Give g+ws permissions to Magento metapackage directories
-  command: find {{ paths }} -type d -exec chmod g+ws {} +
-  vars:
-    paths:
-    - /var/www/html/magento/var
-    - /var/www/html/magento/generated
-    - /var/www/html/magento/vendor
-    - /var/www/html/magento/pub/static
-    - /var/www/html/magento/pub/media
-    - /var/www/html/magento/app/etc
+  command: find {{ item }} -type d -exec chmod g+ws {} +
+  with_items:
+    - var
+    - generated
+    - vendor
+    - static
+    - pub/media
+    - app/etc
   become: yes
+  args:
+    chdir: /var/www/html/magento
+
+- name: Give g+w permissions to Magento metapackage files
+  command: find {{ item }} -type f -exec chmod g+w {} +
+  with_items:
+    - var
+    - generated
+    - vendor
+    - static
+    - pub/media
+    - app/etc
+  become: yes
+  args:
+    chdir: /var/www/html/magento
 
 - name: Change ownership of the Magento metapackages to 'magento_user:www_data'
   file:
