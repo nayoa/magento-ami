@@ -21,6 +21,11 @@ packer_validate:
 ansible_lint:
   stage: test
   image: python:3.7.3
+  variables:
+    PIP_CACHE_DIR: "pip-cache"
+  cache:
+    paths:
+      - pip-cache
   script:
     - pip3 install ansible-lint
     - ansible-lint -x 301 ansible/playbook.yaml
