@@ -81,13 +81,13 @@
     chdir: /var/www/html
 
 - name: Give g+w permissions to Magento metapackage files
-  command: find var generated vendor static pub/media app/etc -type f -exec chmod g+w {} +
+  command: find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} +
   become: yes
   args:
     chdir: /var/www/html/magento
 
 - name: Give g+ws permissions to Magento metapackage directories
-  command: find var generated vendor static pub/media app/etc -type d -exec chmod g+ws {} +
+  command: find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +
   become: yes
   args:
     chdir: /var/www/html/magento
