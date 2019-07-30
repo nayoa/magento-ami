@@ -2,3 +2,8 @@
   apt:
     name: "unzip"
   become: yes
+
+- name: Install package "nfs-utils"
+  apt:
+    name: "nfs-common"
+  become: yes
