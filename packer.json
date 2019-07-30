@@ -33,7 +33,7 @@
   {
     "type": "shell",
     "inline": [
-      "sudo rm /var/lib/apt/lists/lock && sudo rm /var/cache/apt/archives/lock",
+      "sudo rm /var/lib/dpkg/lock && sudo dpkg --configure -a",
       "sudo apt-get -y update && sudo apt-get -y upgrade",
       "sudo apt-get -y install python-pexpect"
     ]
