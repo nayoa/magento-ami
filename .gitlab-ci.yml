@@ -28,7 +28,7 @@ ansible_lint:
       - pip-cache
   script:
     - pip3 install ansible-lint
-    - ansible-lint -x 301 ansible/playbook.yaml
+    - ansible-lint -x 301 -x 302 ansible/playbook.yaml
 
 deploy:dev_account:
   only:
