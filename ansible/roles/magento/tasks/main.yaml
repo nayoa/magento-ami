@@ -93,14 +93,10 @@
     chdir: /var/www/html/magento
 
 - name: Change ownership of the Magento metapackages to 'magento_user:www_data'
-  file:
-    path: /var/www/html/magento
-    owner: magento_user
-    group: www-data
-    state: directory
-    mode: '4770'
-    recurse: yes
+  command: chown -R magento_user:www-data .
   become: yes
+  args:
+    chdir: /var/www/html/magento
 
 - name: Give u+x permissions to the magento file
   file:
