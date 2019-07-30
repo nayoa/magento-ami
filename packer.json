@@ -33,7 +33,7 @@
   {
     "type": "shell",
     "inline": [
-      "sudo rm /var/lib/dpkg/lock && sudo dpkg --configure -a",
+      "while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;",
       "sudo apt-get -y update && sudo apt-get -y upgrade",
       "sudo apt-get -y install python-pexpect"
     ]
