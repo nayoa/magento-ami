@@ -25,6 +25,9 @@ The idea is to install as much as possible on the base Magento AMI that is not u
             |         └── main.yaml
             |    └── vars
             |         └── main.yaml
+            ├── mariadb/
+            |    └── tasks/
+            |         └── main.yaml
             ├── mysql/
             |   └── tasks/
             |        └── main.yaml

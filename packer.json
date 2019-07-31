@@ -49,6 +49,7 @@
         "ansible/roles/common",
         "ansible/roles/magento",
         "ansible/roles/mysql",
+        "ansible/roles/mariadb",
         "ansible/roles/nginx",
         "ansible/roles/php",
         "ansible/roles/fluentd"
