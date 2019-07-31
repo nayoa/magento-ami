@@ -107,7 +107,7 @@
   become: yes
 
 - name: Create Magento crontab
-  command: php bin/magento cron:install [--force]
+  command: php bin/magento cron:install
   become: yes
   become_user: magento_user
   args:
