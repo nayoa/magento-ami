@@ -15,6 +15,11 @@ The idea is to install as much as possible on the base Magento AMI that is not u
             ├── common/
             |    └── tasks/
             |         └── main.yaml
+            ├── fluentd/
+            |   └── tasks/
+            |        └── main.yaml
+            |   └── templates/
+            |        └── limits.conf.j2
             ├── magento/
             |    └── tasks/
             |         └── main.yaml
