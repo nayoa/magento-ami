@@ -4,6 +4,7 @@
   roles:
     - common
     - mysql
+    - mariadb
     - php
     - nginx
     - magento
