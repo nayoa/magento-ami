@@ -97,6 +97,7 @@
   become: yes
   args:
     chdir: /var/www/html/magento
+    warn: false
 
 - name: Give u+x permissions to the magento file
   file:
@@ -104,3 +105,10 @@
     state: file
     mode: u+x
   become: yes
+
+- name: Create Magento crontab
+  command: php bin/magento cron:install [--force]
+  become: yes
+  become_user: magento_user
+  args:
+    chdir: /var/www/html/magento
