@@ -26,11 +26,10 @@
   become: yes
 
 - name: Install GPG key for td-agent
-  command: curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add -
+  apt_key:
+    url: https://packages.treasuredata.com/GPG-KEY-td-agent
+    state: present
   become: yes
-  become_user: root
-  args:
-    warn: false
 
 - name: Install GPG key for td-agent
   command: echo "deb http://packages.treasuredata.com/3/ubuntu/bionic/ bionic contrib" > /etc/apt/sources.list.d/treasure-data.list
