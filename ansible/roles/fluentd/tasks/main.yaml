@@ -19,6 +19,7 @@
       net.ipv4.tcp_slow_start_after_idle = 0
       net.ipv4.tcp_tw_reuse = 1
       net.ipv4.ip_local_port_range = 10240 65535
+  become: yes
 
 - name: Restart sysctl
   command: sysctl -p
@@ -34,3 +35,4 @@
   service:
     name: td-agent
     state: started
+  become: yes
