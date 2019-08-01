@@ -3,6 +3,7 @@
   template:
     src: limits.conf.j2
     dest: /etc/security/limits.conf
+  become: yes
 
 - name: Optimize Network Kernel Parameters
   blockinfile:
