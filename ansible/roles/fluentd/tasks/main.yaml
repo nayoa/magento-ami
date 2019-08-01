@@ -25,11 +25,23 @@
   command: sysctl -p
   become: yes
 
-- name: Get shell script that registers a new apt repository and installs the td-agent package
-  command: curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-bionic-td-agent3.sh | sh
+- name: Install GPG key for td-agent
+  shell: |
+    curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add -
+    echo "deb http://packages.treasuredata.com/3/ubuntu/bionic/ bionic contrib" > /etc/apt/sources.list.d/treasure-data.list
   become: yes
   args:
     warn: false
+
+- name: Update repositories cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Install td-agent
+  apt:
+    name: td-agent
+  become: yes
 
 - name: Start service td-agent, if not started
   service:
