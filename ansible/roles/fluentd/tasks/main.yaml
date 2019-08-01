@@ -31,21 +31,17 @@
     state: present
   become: yes
 
-- name: Install GPG key for td-agent
-  command: echo "deb http://packages.treasuredata.com/3/ubuntu/bionic/ bionic contrib" > /etc/apt/sources.list.d/treasure-data.list
-  become: yes
-  become_user: root
-  args:
-    warn: false
-
-- name: Update repositories cache
-  apt:
-    update_cache: yes
+- name: Add td-agent repository
+  apt_repository:
+    repo: "deb http://packages.treasuredata.com/3/ubuntu/bionic/ bionic contrib"
+    state: present
+    update_cache: true
   become: yes
 
 - name: Install td-agent
   apt:
     name: td-agent
+    state: present
   become: yes
 
 - name: Start service td-agent, if not started
