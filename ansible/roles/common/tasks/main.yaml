@@ -19,6 +19,11 @@
     name: "awscli"
   become: yes
 
+- name: Install package "python3-pip"
+  apt:
+    name: "python3-pip"
+  become: yes
+
 - name: Install pip package "boto3"
   pip:
     name: boto3
