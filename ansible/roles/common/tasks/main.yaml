@@ -7,3 +7,16 @@
   apt:
     name: "nfs-common"
   become: yes
+
+- name: Install package "awscli"
+  apt:
+    name: "awscli"
+  become: yes
+
+- name: Install pip package "boto3"
+  pip:
+    name: boto3
+
+- name: Install pip package "botocore"
+  pip:
+    name: botocore
