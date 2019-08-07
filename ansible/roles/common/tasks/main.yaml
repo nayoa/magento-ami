@@ -22,7 +22,9 @@
 - name: Install pip package "boto3"
   pip:
     name: boto3
+    executable: pip-3.3
 
 - name: Install pip package "botocore"
   pip:
     name: botocore
+    executable: pip-3.3
