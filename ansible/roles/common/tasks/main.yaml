@@ -19,12 +19,12 @@
     name: "awscli"
   become: yes
 
-- name: Install package "python3-botocore"
+- name: Install package "python-botocore"
   apt:
-    name: "python3-botocore"
+    name: "python-botocore"
   become: yes
 
-- name: Install package "python3-boto3"
+- name: Install package "python-boto3"
   apt:
-    name: "python3-boto3"
+    name: "python-boto3"
   become: yes
