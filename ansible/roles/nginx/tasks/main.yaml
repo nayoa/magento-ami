@@ -1,6 +1,6 @@
 - name: Install Nginx package
   apt:
-    name: nginx
+    name: "nginx=1.14.0-0ubuntu1.6"
   become: yes
 
 - name: Ensure the Nginx service is running
