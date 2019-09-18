@@ -16,6 +16,7 @@
     - php7.2-bcmath={{ php_version }}
     - php7.2-soap={{ php_version }}
     - php7.2-curl={{ php_version }}
+    - php-redis=3.1.6-1build1
   become: yes
 
 - name: Ensure the PHP-FPM service is running
