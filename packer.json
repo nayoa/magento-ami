@@ -33,7 +33,8 @@
   {
     "type": "shell",
     "inline": [
-      "sudo apt-get -y install python-pexpect"
+      "sudo apt-get -y install python-pexpect",
+      "sudo rm -f /var/lib/dpkg/lock"
     ]
   },
   {
