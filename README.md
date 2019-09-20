@@ -15,13 +15,13 @@ The idea is to install as much as possible on the base Magento AMI that is not u
             ├── common/
             |    └── tasks/
             |         └── main.yaml
+            ├── redis/
+            |   └── tasks/
+            |        └── main.yaml
             ├── magento/
             |    └── tasks/
             |         └── main.yaml
             |    └── vars
-            |         └── main.yaml
-            ├── mariadb/
-            |    └── tasks/
             |         └── main.yaml
             ├── mysql/
             |   └── tasks/
