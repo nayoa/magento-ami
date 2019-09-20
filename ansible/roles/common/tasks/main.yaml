@@ -38,3 +38,8 @@
   apt:
     name: "python-boto3=1.4.2-1"
   become: yes
+
+- name: Install package "stunnel4"
+  apt:
+    name: "stunnel4=3:5.44-1ubuntu3"
+  become: yes
