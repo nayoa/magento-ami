@@ -46,7 +46,6 @@
       "playbook_file": "./ansible/playbook.yaml",
       "role_paths": [
         "ansible/roles/common",
-        "ansible/roles/redis",
         "ansible/roles/magento",
         "ansible/roles/mysql",
         "ansible/roles/nginx",
