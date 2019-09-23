@@ -11,7 +11,7 @@
 
 - name: Install package "gcc"
   apt:
-    name: "gcc-4:7.4.0-1ubuntu2.3"
+    name: "gcc=4:7.4.0-1ubuntu2.3"
   become: yes
 
 - name: Install package "make"
